@@ -1,2 +1,3 @@
-# okta-spring-security-5-example
+# Spring Security 5 + Okta
+ 
 Authentication with Okta and Spring Security 5
