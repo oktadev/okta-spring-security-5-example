@@ -38,49 +38,51 @@ import java.util.Map;
 @Controller
 public class MainController {
 
-	@Autowired
-	private OAuth2AuthorizedClientService authorizedClientService;
+    private final OAuth2AuthorizedClientService authorizedClientService;
 
-	@RequestMapping("/")
-	public String index(Model model, OAuth2AuthenticationToken authentication) {
-		OAuth2AuthorizedClient authorizedClient = this.getAuthorizedClient(authentication);
-		model.addAttribute("userName", authentication.getName());
-		model.addAttribute("clientName", authorizedClient.getClientRegistration().getClientName());
-		return "index";
-	}
+    @Autowired
+    public MainController(OAuth2AuthorizedClientService authorizedClientService) {
+        this.authorizedClientService = authorizedClientService;
+    }
 
-	@RequestMapping("/userinfo")
-	public String userinfo(Model model, OAuth2AuthenticationToken authentication) {
-		OAuth2AuthorizedClient authorizedClient = this.getAuthorizedClient(authentication);
-		Map userAttributes = Collections.emptyMap();
-		String userInfoEndpointUri = authorizedClient.getClientRegistration()
-			.getProviderDetails().getUserInfoEndpoint().getUri();
-		if (!StringUtils.isEmpty(userInfoEndpointUri)) {	// userInfoEndpointUri is optional for OIDC Clients
-			userAttributes = WebClient.builder()
-				.filter(oauth2Credentials(authorizedClient))
-				.build()
-				.get()
-				.uri(userInfoEndpointUri)
-				.retrieve()
-				.bodyToMono(Map.class)
-				.block();
-		}
-		model.addAttribute("userAttributes", userAttributes);
-		return "userinfo";
-	}
+    @RequestMapping("/")
+    public String index(Model model, OAuth2AuthenticationToken authentication) {
+        OAuth2AuthorizedClient authorizedClient = this.getAuthorizedClient(authentication);
+        model.addAttribute("userName", authentication.getName());
+        model.addAttribute("clientName", authorizedClient.getClientRegistration().getClientName());
+        return "index";
+    }
 
-	private OAuth2AuthorizedClient getAuthorizedClient(OAuth2AuthenticationToken authentication) {
-		return this.authorizedClientService.loadAuthorizedClient(
-			authentication.getAuthorizedClientRegistrationId(), authentication.getName());
-	}
+    @RequestMapping("/userinfo")
+    public String userinfo(Model model, OAuth2AuthenticationToken authentication) {
+        OAuth2AuthorizedClient authorizedClient = this.getAuthorizedClient(authentication);
+        Map userAttributes = Collections.emptyMap();
+        String userInfoEndpointUri = authorizedClient.getClientRegistration()
+                .getProviderDetails().getUserInfoEndpoint().getUri();
+        if (!StringUtils.isEmpty(userInfoEndpointUri)) {    // userInfoEndpointUri is optional for OIDC Clients
+            userAttributes = WebClient.builder()
+                    .filter(oauth2Credentials(authorizedClient)).build()
+                    .get().uri(userInfoEndpointUri)
+                    .retrieve()
+                    .bodyToMono(Map.class).block();
+        }
+        model.addAttribute("userAttributes", userAttributes);
+        return "userinfo";
+    }
 
-	private ExchangeFilterFunction oauth2Credentials(OAuth2AuthorizedClient authorizedClient) {
-		return ExchangeFilterFunction.ofRequestProcessor(
-			clientRequest -> {
-				ClientRequest authorizedRequest = ClientRequest.from(clientRequest)
-					.header(HttpHeaders.AUTHORIZATION, "Bearer " + authorizedClient.getAccessToken().getTokenValue())
-					.build();
-				return Mono.just(authorizedRequest);
-			});
-	}
+    private OAuth2AuthorizedClient getAuthorizedClient(OAuth2AuthenticationToken authentication) {
+        return this.authorizedClientService.loadAuthorizedClient(
+                authentication.getAuthorizedClientRegistrationId(), authentication.getName());
+    }
+
+    private ExchangeFilterFunction oauth2Credentials(OAuth2AuthorizedClient authorizedClient) {
+        return ExchangeFilterFunction.ofRequestProcessor(
+                clientRequest -> {
+                    ClientRequest authorizedRequest = ClientRequest.from(clientRequest)
+                            .header(HttpHeaders.AUTHORIZATION,
+                                    "Bearer " + authorizedClient.getAccessToken().getTokenValue())
+                            .build();
+                    return Mono.just(authorizedRequest);
+                });
+    }
 }
