@@ -61,7 +61,7 @@ After modifying this file, restart your app and you'll be prompted to click on a
 
 ## Links
 
-This example uses the Spring Security [OAuth 2.0 Login](https://docs.spring.io/spring-security/site/docs/5.0.0.RELEASE/reference/htmlsingle/#jc-oauth2login) feature.
+This example uses Spring Security's [OAuth 2.0 Login](https://docs.spring.io/spring-security/site/docs/5.0.0.RELEASE/reference/htmlsingle/#jc-oauth2login) feature.
 
 ## Help
 
