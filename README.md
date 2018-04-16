@@ -20,7 +20,7 @@ Please read [TBD]() to see how this app was created.
 To install this example application, run the following commands:
 
 ```bash
-git clone git@github.com:oktadeveloper/okta-spring-security-5-example.git
+git clone https://github.com/oktadeveloper/okta-spring-security-5-example.git
 cd okta-spring-security-5-example
 ```
 
