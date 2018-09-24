@@ -1,6 +1,6 @@
 # Spring Security 5 + Okta
  
-An example app that shows how to use OIDC with Spring Security 5, Spring WebFlux, and Okta. 
+An example app that shows how to use OIDC with Spring Security 5 and Okta. 
 
 <!--
 Please read [TBD]() to see how this app was created.
