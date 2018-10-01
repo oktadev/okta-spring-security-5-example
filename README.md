@@ -2,9 +2,7 @@
  
 An example app that shows how to use OIDC with Spring Security 5 and Okta. 
 
-<!--
-Please read [TBD]() to see how this app was created.
--->
+Please read [Get Started with Spring Security 5.0 and OIDC](https://developer.okta.com/blog/2017/12/18/spring-security-5-oidc) to see how this app was created.
 
 **Prerequisites:** [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
 
@@ -32,7 +30,7 @@ This will get a copy of the project installed locally. To install all of its dep
 
 ### Create an Application in Okta
 
-You will need to [create an OpenID Connect Application in Okta](https://developer.okta.com/blog/2017/12/06/bootiful-development-with-spring-boot-and-react#create-an-oidc-app-in-okta) to get your values to perform authentication. 
+You will need to [create an OpenID Connect Application in Okta](https://developer.okta.com/blog/2017/12/18/spring-security-5-oidc#create-an-openid-connect-app) to get your values to perform authentication. 
 
 Log in to your Okta Developer account (or [sign up](https://developer.okta.com/signup/) if you don’t have an account) and navigate to **Applications** > **Add Application**. Click **Web**, click **Next**, and give the app a name you’ll remember. Click **Done** and copy the `clientId` and `clientSecret` into `server/src/main/resources/application.yml`. 
 
@@ -65,7 +63,7 @@ This example uses Spring Security's [OAuth 2.0 Login](https://docs.spring.io/spr
 
 ## Help
 
-Please post any questions as comments on the [blog post](), or visit our [Okta Developer Forums](https://devforum.okta.com/). You can also email developers@okta.com if you would like to create a support ticket.
+Please post any questions as comments on the [blog post](https://developer.okta.com/blog/2017/12/18/spring-security-5-oidc), or visit our [Okta Developer Forums](https://devforum.okta.com/). You can also email developers@okta.com if you would like to create a support ticket.
 
 ## License
 
